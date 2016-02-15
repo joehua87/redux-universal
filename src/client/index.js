@@ -5,6 +5,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, match, browserHistory } from 'react-router'
 import { trigger } from 'redial'
+import { Root } from 'redux-react-local'
 
 import configureStore from '../redux/configureStore'
 import routes from '../routes'
@@ -52,8 +53,10 @@ browserHistory.listen(location => {
 })
 
 render(
-  <Provider store={store}>
-    <Router history={browserHistory} routes={routes}/>
-  </Provider>,
+  <Root>
+    <Provider store={store}>
+      <Router history={browserHistory} routes={routes}/>
+    </Provider>
+  </Root>,
   rootElement
 )

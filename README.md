@@ -2,6 +2,7 @@
 * Hot Module Reload
 * Easy to switch between client & server to **increase dev experience**
 * react-toolbox (material design)
+* Redux React Local (https://github.com/threepointone/redux-react-local)
 
 ## Reference
 
