@@ -45,7 +45,7 @@ export default class UserDetail extends Component {
         {this.props.user.login}
         <div>
           <h2>Try Local Redux</h2>
-          <p>Simulate fetch something that should be in global state</p>
+          <p>Simulate fetching something that should not be in global state</p>
           <p>{this.props.state}</p>
           <Button primary raised label="Increase" onClick={this.handleIncreaseClick}/>
           <Button primary label="Decrease" onClick={this.handleDecreaseClick}/>
