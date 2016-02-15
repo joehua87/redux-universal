@@ -1,11 +1,14 @@
+@import "~react-toolbox/components/commons.scss";
+
 .app {
   display: flex;
   flex-flow: column nowrap;
+  background-color: #f5f5f5;
 }
 
 .main {
-  margin: 10px;
-  margin-top: 100px;
+  margin: $unit;
+  margin-top: 6.8 * $unit;
   flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;

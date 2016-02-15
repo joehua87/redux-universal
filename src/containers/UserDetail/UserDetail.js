@@ -27,7 +27,8 @@ export default class UserDetail extends Component {
     }
 
     return (
-      <div>
+      <div style={{ height: 1000 }}>
+        <p>This is the very long page</p>
         {this.props.user.login}
       </div>
     )

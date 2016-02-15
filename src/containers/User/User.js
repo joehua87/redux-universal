@@ -33,20 +33,22 @@ class User extends Component {
     }
 
     return (
-      <div className="row" style={{ overflowY: 'auto', padding: 10 }}>
-        <Card className="col-sm-4" style={{ overflowY: 'auto' }}>
-          <List ripple>
-            <ListSubHeader caption="Users"/>
-            {this.props.entities.map((item) => (
-              <ListItem key={item.id} avatar={item.avatar_url} caption={item.login}
-                        onClick={() => this.onUserClick(item.login)}/>
-            ))}
-          </List>
-        </Card>
-        <div className="col-sm-4">
-          <div className="box">
+      <div className="row" style={{ overflowY: 'auto' }}>
+        <div className="col-sm-4" style={{ overflowY: 'auto' }}>
+          <Card className="box" style={{ overflowY: 'auto' }}>
+            <List ripple>
+              <ListSubHeader caption="Users"/>
+              {this.props.entities.map((item) => (
+                <ListItem key={item.id} avatar={item.avatar_url} caption={item.login}
+                          onClick={() => this.onUserClick(item.login)}/>
+              ))}
+            </List>
+          </Card>
+        </div>
+        <div className="col-sm-8" style={{ overflowY: 'auto' }}>
+          <Card className="box" style={{ overflowY: 'auto' }}>
             {this.props.children}
-          </div>
+          </Card>
         </div>
       </div>
     )
