@@ -1,0 +1,44 @@
+$color-primary: $palette-blue-200 !default;
+$color-primary-dark: $palette-blue-400 !default;
+$color-accent: $palette-pink-a200 !default;
+$color-accent-dark: $palette-pink-700 !default;
+$color-primary-contrast: $color-dark-contrast !default;
+$color-accent-contrast: $color-dark-contrast !default;
+
+$appbar-contrast: $color-primary;
+$dropdown-color-white: $color-white;
+$dropdown-color-primary: $color-primary;
+$dropdown-color-primary-contrast: $color-primary-contrast;
+$dropdown-value-hover-background: $palette-grey-200;
+
+@mixin Appbar($bColor: #fff, $marginB: 20px) {
+  display: flex;
+  background: $bColor;
+  margin-bottom: $marginB;
+  .input {
+    width: 100%;
+  }
+}
+@mixin TableView($bColor: white, $lineHeight: 30px) {
+  background: $bColor;
+  line-height: $lineHeight;
+  @include shadow-3dp;
+}
+@mixin ScrollView($height: 500px) {
+  height: $height;
+  overflow-y: scroll;
+  -ms-overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(48, 48, 48, 0.44);
+    border-radius: 10px;
+  }
+}

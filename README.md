@@ -1,3 +1,8 @@
+## Features
+* Hot Module Reload
+* Easy to switch between client & server to **increase dev experience**
+* react-toolbox (material design)
+
 ## Reference
 
 ### Starter Kits

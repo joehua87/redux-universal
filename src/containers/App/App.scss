@@ -1,0 +1,12 @@
+.app {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.main {
+  margin: 10px;
+  margin-top: 100px;
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+}

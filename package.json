@@ -1,0 +1,151 @@
+{
+  "name": "redux-universal",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "better-npm-run start-dev",
+    "start-dev-universal": "better-npm-run start-dev-universal",
+    "watch-client": "better-npm-run watch-client",
+    "dev-universal-old": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev-universal\"",
+    "dev-universal": "webpack --config webpack/webpack.config.js && NODE_ENV=development node ./bin/server.universal",
+    "dev-async-connect": "webpack --config webpack/webpack.async-connect.config.js && NODE_ENV=development node ./bin/server.async-connect",
+    "dev-redial": "webpack --config webpack/webpack.redial.config.js && NODE_ENV=development node ./bin/server.redial",
+    "dev": "node bin/server"
+  },
+  "betterScripts": {
+    "start-prod": {
+      "command": "node ./bin/server.js",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production",
+        "PORT": 8080,
+        "APIPORT": 3030
+      }
+    },
+    "start-prod-api": {
+      "command": "node ./bin/api.js",
+      "env": {
+        "NODE_PATH": "./api",
+        "NODE_ENV": "production",
+        "APIPORT": 3030
+      }
+    },
+    "dev": {
+      "command": "node ./bin/server"
+    },
+    "start-dev-universal": {
+      "command": "node ./bin/server.universal",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "PORT": 3000,
+        "APIPORT": 3030
+      }
+    },
+    "start-dev-api": {
+      "command": "node ./bin/api.js",
+      "env": {
+        "NODE_PATH": "./api",
+        "NODE_ENV": "development",
+        "APIPORT": 3030
+      }
+    },
+    "watch-client": {
+      "command": "node ./webpack/webpack-dev-server.js",
+      "env": {
+        "UV_THREADPOOL_SIZE": 100,
+        "NODE_PATH": "./src"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joehua87/redux-koa-universal.git"
+  },
+  "keywords": [
+    "redux",
+    "koa",
+    "universal",
+    "react",
+    "isomorphic"
+  ],
+  "author": "joehua87",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joehua87/redux-koa-universal/issues"
+  },
+  "homepage": "https://github.com/joehua87/redux-koa-universal#readme",
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.4.5",
+    "babel-eslint": "^5.0.0-beta9",
+    "babel-loader": "^6.2.2",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-react-hmre": "^1.1.0",
+    "babel-preset-stage-0": "^6.3.13",
+    "classnames": "^2.2.3",
+    "concurrently": "^1.0.0",
+    "css-loader": "^0.23.1",
+    "debug": "^2.2.0",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^5.0.0",
+    "eslint-loader": "^1.2.1",
+    "eslint-plugin-react": "^3.16.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "koa-webpack-dev": "^1.0.2",
+    "lodash": "^4.3.0",
+    "node-sass": "^3.4.2",
+    "normalize.css": "^3.0.3",
+    "postcss-loader": "^0.8.0",
+    "react-addons-css-transition-group": "^0.14.7",
+    "react-toolbox": "^0.14.1",
+    "react-transform-catch-errors": "^1.0.2",
+    "react-transform-hmr": "^1.0.2",
+    "redux-devtools": "^3.1.0",
+    "redux-devtools-dock-monitor": "^1.0.1",
+    "redux-devtools-log-monitor": "^1.0.4",
+    "redux-logger": "^2.5.2",
+    "rucksack-css": "^0.8.5",
+    "sass-loader": "^3.1.2",
+    "serialize-javascript": "^1.1.2",
+    "style-loader": "^0.13.0",
+    "toolbox-loader": "0.0.3",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.13",
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.6.4",
+    "webpack-isomorphic-tools": "^2.2.27"
+  },
+  "dependencies": {
+    "axios": "^0.9.1",
+    "babel-register": "^6.4.3",
+    "better-npm-run": "0.0.7",
+    "bluebird": "^3.2.1",
+    "co": "^4.6.0",
+    "express": "^4.13.4",
+    "history": "^2.0.0",
+    "humps": "^1.0.0",
+    "lodash": "^4.2.1",
+    "marked": "^0.3.5",
+    "normalizr": "^2.0.0",
+    "qs": "^6.1.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-helmet": "^2.3.1",
+    "react-redux": "^4.3.0",
+    "react-router": "^2.0.0",
+    "react-router-redux": "^3.0.0",
+    "redial": "^0.4.1",
+    "redux": "^3.2.1",
+    "redux-actions": "^0.9.1",
+    "redux-async-connect": "^0.1.13",
+    "redux-logger": "^2.5.0",
+    "redux-thunk": "^1.0.3"
+  }
+}
