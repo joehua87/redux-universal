@@ -1,38 +1,63 @@
 import request from 'axios'
+import qs from 'qs'
+const debug = require('debug')('redux-universal:middleware:fetcher')
 
-const methods = ['get', 'post', 'put', 'patch', 'del']
+export const CALL_API = Symbol('Call API')
 
-class ApiFetcher {
-  constructor() {
-    methods.forEach((method) =>
-      this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
-        request[method](path, { params, data })
-          .then(resolve)
-          .catch(reject)
-      }))
-  }
+export function callApi({ endpoint, method, params, data }) {
+  debug(`Call Api with`, { endpoint, method, params, data })
+
+  return request[method](endpoint, {
+    params,
+    data,
+    paramsSerializer: (param) => qs.stringify(param, { encode: false })
+  })
+    .then(response => response.data)
 }
 
-export default function fetcherMiddleware({ dispatch, getState }) {
-  const fetcher = new ApiFetcher()
-  return next => action => {
-    if (typeof action === 'function') {
-      return action(dispatch, getState)
-    }
-
-    const { promise, types, ...rest } = action // eslint-disable-line no-redeclare
-    if (!promise) {
-      return next(action)
-    }
-
-    const [REQUEST, SUCCESS, FAILURE] = types
-    next({ ...rest, type: REQUEST })
-    return promise(fetcher).then(
-      (response) => next({ ...rest, payload: response.data, response, type: SUCCESS }),
-      (error) => next({ ...rest, payload: error, type: FAILURE })
-    ).catch((error) => {
-      console.error('FETCHING MIDDLEWARE ERROR:', error)
-      next({ ...rest, error, type: FAILURE })
-    })
+export default store => next => action => {
+  const callAPI = action[CALL_API]
+  if (typeof callAPI === 'undefined') {
+    return next(action)
   }
+
+  debug(`Trigger middleware with`, callAPI)
+
+  let { endpoint } = callAPI
+  const { types, method, params, data } = callAPI
+
+  if (typeof endpoint === 'function') {
+    endpoint = endpoint(store.getState())
+  }
+  if (typeof endpoint !== 'string') {
+    throw new Error('Specify a string endpoint URL.')
+  }
+  if (!['get', 'post', 'put', 'patch', 'del'].includes(method)) {
+    throw new Error('Expected method should be get, post, put, patch, del')
+  }
+  if (!Array.isArray(types) || types.length !== 3) {
+    throw new Error('Expected an array of three action types.')
+  }
+  if (!types.every(type => typeof type === 'string')) {
+    throw new Error('Expected action types to be strings.')
+  }
+
+  function actionWith(actionData) {
+    const finalAction = Object.assign({}, action, actionData)
+    delete finalAction[CALL_API]
+    return finalAction
+  }
+
+  const [requestType, successType, failureType] = types
+  next(actionWith({ type: requestType }))
+
+  return callApi({ endpoint, method, params, data })
+    .then(response => next(actionWith({
+      payload: response,
+      type: successType
+    })))
+    .catch(error => next(actionWith({
+      type: failureType,
+      payload: error.message || 'Something bad happened'
+    })))
 }

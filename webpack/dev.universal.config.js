@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const path = require('path')
+require('babel-polyfill')
 require('webpack-isomorphic-tools')
 
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { provideHooks } from 'redial'
 
@@ -8,13 +7,9 @@ import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list'
 import { routeActions } from 'react-router-redux'
 
 import { getUsers } from '../../actions/user'
-import * as user from '../../redux/modules/user'
 
 const hooks = {
-  defer: ({ dispatch, query: { keyword, repos, followers }, ...rest }) => {
-    console.log('-------', rest)
-    return dispatch(getUsers({ keyword, repos, followers }))
-  }
+  fetch: ({ dispatch }) => dispatch(getUsers())
 }
 
 class User extends Component {
@@ -33,21 +28,23 @@ class User extends Component {
     }
 
     return (
-      <div className="row" style={{ overflowY: 'auto' }}>
-        <div className="col-sm-4" style={{ overflowY: 'auto' }}>
-          <Card className="box" style={{ overflowY: 'auto' }}>
+      <div className="row" style={{ overflowY: 'hidden' }}>
+        <div className="col-sm-4" style={{ overflowY: 'auto', display: 'flex', flexFlow: 'column nowrap' }}>
+          <Card className="box" style={{ overflowY: 'auto', flexGrow: 1 }}>
             <List ripple>
               <ListSubHeader caption="Users"/>
               {this.props.entities.map((item) => (
-                <ListItem key={item.id} avatar={item.avatar_url} caption={item.login}
+                <ListItem className="user" key={item.id} avatar={item.avatar_url} caption={item.login}
                           onClick={() => this.onUserClick(item.login)}/>
               ))}
             </List>
           </Card>
         </div>
-        <div className="col-sm-8" style={{ overflowY: 'auto' }}>
-          <Card className="box" style={{ overflowY: 'auto' }}>
-            {this.props.children}
+        <div className="col-sm-8" style={{ overflowY: 'auto', display: 'flex', flexFlow: 'column nowrap' }}>
+          <Card className="box" style={{ overflowY: 'auto', flexGrow: 1 }}>
+            <div>
+              {this.props.children}
+            </div>
           </Card>
         </div>
       </div>
@@ -62,9 +59,6 @@ class User extends Component {
   }
 }
 
-const ReduxComponent = connect(state => state.user, dispatch => ({
-  ...bindActionCreators(user, dispatch),
-  dispatch
-}))(User)
+const ReduxComponent = connect(state => state.user)(User)
 
 export default provideHooks(hooks)(ReduxComponent)

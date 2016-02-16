@@ -1,22 +1,19 @@
 import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
-// import createBrowserHistory from 'history/lib/createBrowserHistory'
-import { Provider } from 'react-redux'
-import { Router, match, browserHistory } from 'react-router'
+import { match, browserHistory } from 'react-router'
 import { trigger } from 'redial'
-import { Root } from 'redux-react-local'
 
+import Root from '../containers/Root'
 import configureStore from '../redux/configureStore'
 import routes from '../routes'
 
 const rootElement = document.getElementById('content')
 
 const initialState = window.__data
-const store = configureStore(initialState)
+const store = configureStore(browserHistory, initialState)
 const { dispatch } = store
 
-// Set up history for router and listen for changes:
 browserHistory.listen(location => {
   // Match routes based on location object:
   match({ routes, location }, (routerError, redirectLocation, renderProps) => {
@@ -53,10 +50,6 @@ browserHistory.listen(location => {
 })
 
 render(
-  <Root>
-    <Provider store={store}>
-      <Router history={browserHistory} routes={routes}/>
-    </Provider>
-  </Root>,
+  <Root store={store}/>,
   rootElement
 )

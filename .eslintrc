@@ -17,4 +17,7 @@
   "plugins": [
     "react"
   ],
+  "globals": {
+    "webpackIsomorphicTools": 1
+  }
 }
