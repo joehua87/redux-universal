@@ -5,6 +5,8 @@ import koaBodyParser from 'koa-bodyparser'
 import koaLogger from 'koa-logger'
 import koaQs from 'koa-qs'
 import koaJson from 'koa-json'
+import jwt from 'koa-jwt'
+
 require('babel-polyfill')
 
 const app = koa()
@@ -19,11 +21,16 @@ app.use(koaBodyParser())
 app.use(koaJson())
 koaQs(app, 'extended')
 
-const router = new KoaRouter()
-app.use(router.middleware())
+const authRouter = new KoaRouter()
+app.use(authRouter.middleware())
+require('./routes/auth.routes').default(authRouter)
 
-require('./routes/post.routes').default(router)
-require('./routes/category.routes').default(router)
-require('./routes/tag.routes').default(router)
+app.use(jwt({ secret: 'shared-secret' }))
+
+const apiRouter = new KoaRouter()
+app.use(apiRouter.middleware())
+require('./routes/post.routes').default(apiRouter)
+require('./routes/category.routes').default(apiRouter)
+require('./routes/tag.routes').default(apiRouter)
 
 export default app
