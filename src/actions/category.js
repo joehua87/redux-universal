@@ -6,9 +6,9 @@ export const LOAD_POSTS_SUCCESS = 'category/LOAD_POSTS_SUCCESS'
 export const LOAD_POSTS_FAIL = 'category/LOAD_POSTS_FAIL'
 
 const env = process.env.NODE_ENV || 'dev'
-const config = require('../api/config')[env]
+const config = require('../config')[env]
 
-const endpoint = `http://localhost:${config.port}`
+const endpoint = `${config.apiEndpoint}`
 
 export function loadPosts(category) {
   debug(`Get Posts by Category: ${category}`)

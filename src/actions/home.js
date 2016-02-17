@@ -10,9 +10,9 @@ export const LOAD_TAGS_SUCCESS = 'home/LOAD_TAGS_SUCCESS'
 export const LOAD_TAGS_FAIL = 'home/LOAD_TAGS_FAIL'
 
 const env = process.env.NODE_ENV || 'dev'
-const config = require('../api/config')[env]
+const config = require('../config')[env]
 
-const endpoint = `http://localhost:${config.port}`
+const endpoint = `${config.apiEndpoint}`
 
 export function loadCategories() {
   debug(`Get all Categories`)

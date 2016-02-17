@@ -17,27 +17,27 @@
   },
   "betterScripts": {
     "dev-universal": {
-      "command": "webpack --config webpack/webpack.config.js && node ./bin/server.universal",
+      "command": "node ./bin/server.universal",
       "env": {
         "NODE_ENV": "dev"
       }
     },
     "build": {
-      "command": "webpack --config webpack/webpack.config.js",
+      "command": "webpack --config webpack/dev.universal.config.js",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "start": {
-      "command": "node ./bin/server.universal",
+      "command": "pm2 start ./bin/server.universal.js",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "dev"
       }
     },
     "start-api": {
-      "command": "node ./src/api",
+      "command": "pm2 start ./src/api/index.js",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "dev"
       }
     },
     "dev": {
@@ -159,6 +159,7 @@
     "marked": "^0.3.5",
     "mongoose": "^4.4.3",
     "normalizr": "^2.0.0",
+    "pm2": "^1.0.1",
     "qs": "^6.1.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",

@@ -6,9 +6,9 @@ export const LOAD_POST_SUCCESS = 'tag/LOAD_POST_SUCCESS'
 export const LOAD_POST_FAIL = 'tag/LOAD_POST_FAIL'
 
 const env = process.env.NODE_ENV || 'dev'
-const config = require('../api/config')[env]
+const config = require('../config')[env]
 
-const endpoint = `http://localhost:${config.port}`
+const endpoint = `${config.apiEndpoint}`
 
 export function loadPost(slug) {
   debug(`Get Post by slug: ${slug}`)

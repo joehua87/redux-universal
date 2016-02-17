@@ -1,4 +1,4 @@
-The code is only my opinion & the docs need to be improved. If you see any problem with it, please correct me. Thank you.
+The code is in experience mode & the docs need to be improved. If you see any problem with it, please correct me. Thank you.
 ## Demo
 http://45.79.94.169:3000 (still run on NODE_ENV=dev, so the performance would be slow)
 
@@ -57,6 +57,8 @@ tests/server-render.tests.js
   * route to category page
   * route to tag page
   * route to post page
+* Config Continuous Delivery
+* Add Code Coverage with istanbul
 
 ## Reference
 
