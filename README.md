@@ -35,9 +35,7 @@ tests/server-render.tests.js
 * debug (https://www.npmjs.com/package/debug)
 
 ## Commands
-* npm run dev: Start dev render on client
-* npm run dev-universal: Start dev render on server
-* npm run test
+* See latest at package.json
 
 ## Issues
 * Nested Route (waiting for https://github.com/markdalgleish/redial/issues/16)

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/server'
 import serialize from 'serialize-javascript'
 import Helmet from 'react-helmet'
 
+const debug = require('debug')('redux-universal:helpers:Html')
+
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
  * Used in server-side code only to wrap the string output of the
@@ -20,11 +22,21 @@ export default class Html extends Component {
   };
 
   render() {
+    debug('Start render Html')
+
     const { assets, component, store } = this.props
-    const content = component ? ReactDOM.renderToString(component) : ''
+
+    let content
+    try {
+      content = component ? ReactDOM.renderToString(component) : ''
+      debug(content)
+    } catch (err) {
+      debug(err.stack)
+    }
+
     const head = Helmet.rewind()
 
-    return (
+    const result = (
       <html lang="en-us">
         <head>
           {head.base.toComponent()}
@@ -57,5 +69,8 @@ export default class Html extends Component {
         </body>
       </html>
     )
+
+    debug('Successfully render Html')
+    return result
   }
 }

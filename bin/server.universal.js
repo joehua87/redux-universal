@@ -1,4 +1,9 @@
 require('babel-register')
+require('babel-polyfill')
+
+global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production'
+global.__UNIVERSAL__ = true
+
 const rootDir = require('path').resolve(__dirname, '..')
 
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools')

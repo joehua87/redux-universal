@@ -1,16 +1,10 @@
 /* eslint-disable no-console, no-use-before-define */
 
 import Express from 'express'
-
-import webpack from 'webpack'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConfig from '../../webpack/dev.universal.config'
-
+import path from 'path'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, createMemoryHistory } from 'react-router'
-import path from 'path'
 import { trigger } from 'redial'
 import random from 'lodash/random'
 
@@ -19,18 +13,26 @@ import routes from '../routes'
 import Html from '../helpers/Html'
 import Root from '../containers/Root'
 
+const debug = require('debug')('redux-universal:server:server.universal')
 const app = new Express()
 const port = 3000
 
 // Use this middleware to set up hot module reloading via webpack.
-const compiler = webpack(webpackConfig)
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
+if (global.__DEVELOPMENT__) {
+  debug('In Development Mode - Load Hot Dev')
+  require('./middleware/hot-dev.middleware').default(app, require('../../webpack/dev.universal.config'))
+} else {
+  app.use(Express.static(path.join(__dirname, '../../static')))
+}
 
-app.use('/static', Express.static(path.resolve(__dirname, '../../static/dist')))
+// app.use('/static', Express.static(path.resolve(__dirname, '../../static/dist')))
 app.use(handleRender)
 
 function handleRender(req, res) {
+  if (global.__DEVELOPMENT__) {
+    webpackIsomorphicTools.refresh()
+  }
+
   const history = createMemoryHistory(req.url)
 
   // Compile an initial state

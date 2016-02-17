@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "better-npm-run build",
-    "dev-universal": "better-npm-run dev-universal",
+    "build-client": "better-npm-run build-client",
     "dev": "better-npm-run dev",
+    "dev-client": "better-npm-run dev-client",
     "dev-api": "better-npm-run dev-api",
     "start": "better-npm-run start",
+    "start-client": "better-npm-run start-client",
     "start-api": "better-npm-run start-api",
     "test": "better-npm-run test",
     "test-api": "better-npm-run test-api",
@@ -16,22 +18,28 @@
     "generate-data": "better-npm-run generate-data"
   },
   "betterScripts": {
-    "dev-universal": {
-      "command": "node ./bin/server.universal",
+    "build-client": {
+      "command": "webpack --config webpack/prod.client.config.js",
       "env": {
-        "NODE_ENV": "dev"
+        "NODE_ENV": "production"
       }
     },
     "build": {
-      "command": "webpack --config webpack/dev.universal.config.js",
+      "command": "webpack --config webpack/prod.universal.config.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "start-client": {
+      "command": "node ./bin/server.client.js",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "start": {
-      "command": "pm2 start ./bin/server.universal.js",
+      "command": "node ./bin/server.universal.js",
       "env": {
-        "NODE_ENV": "dev"
+        "NODE_ENV": "production"
       }
     },
     "start-api": {
@@ -41,7 +49,13 @@
       }
     },
     "dev": {
-      "command": "node ./bin/server",
+      "command": "node ./bin/server.universal",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
+    "dev-client": {
+      "command": "node ./bin/server.client",
       "env": {
         "NODE_ENV": "dev"
       }
@@ -62,7 +76,7 @@
       "command": "eslint --fix ./src"
     },
     "generate-data": {
-      "command": "node ./bin/generate-data"
+      "command": "node ./bin/generate-blog-data"
     }
   },
   "repository": {
@@ -99,6 +113,7 @@
     "chai-things": "^0.2.0",
     "cheerio": "^0.20.0",
     "classnames": "^2.2.3",
+    "clean-webpack-plugin": "^0.1.8",
     "co": "^4.6.0",
     "concurrently": "^1.0.0",
     "css-loader": "^0.23.1",
@@ -127,6 +142,7 @@
     "rucksack-css": "^0.8.5",
     "sass-loader": "^3.1.2",
     "serialize-javascript": "^1.1.2",
+    "strip-loader": "^0.1.2",
     "style-loader": "^0.13.0",
     "supertest": "^1.2.0",
     "toolbox-loader": "0.0.3",
