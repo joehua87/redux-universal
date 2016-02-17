@@ -1,18 +1,12 @@
-import Koa from 'koa'
-import KoaRouter from 'koa-router'
-import logger from 'koa-logger'
+require('babel-register')
+const mongoose = require('mongoose')
 
-// TODO Implement a separate Api instead of GitHub
+const env = process.env.NODE_ENV || 'dev'
+const config = require('./config')[env]
 
-const app = new Koa()
-const router = new KoaRouter()
+if (env !== 'test') {
+  mongoose.connect(config.db)
+}
 
-router.get('/', function*(next) {
-  this.body = { message: 'Hello world' }
-  yield next
-})
-
-app.use(logger())
-app.use(router.routes())
-
-app.listen(3000)
+const app = require('./app.es6').default
+app.listen(config.port)

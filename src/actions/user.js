@@ -1,5 +1,4 @@
 import { CALL_API } from '../redux/middleware/fetcher'
-
 const debug = require('debug')('redux-universal:actions:user')
 
 export const LOAD_START = 'user/LOAD_START'

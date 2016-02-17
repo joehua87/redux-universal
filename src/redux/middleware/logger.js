@@ -1,4 +1,6 @@
+const debug = require('debug')('redux-universal:logger')
+
 export default () => next => action => {
-  console.log('Action', action)
+  debug('Action', action)
   return next(action)
 }
